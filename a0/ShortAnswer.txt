@@ -1,0 +1,63 @@
+Enter your responses inline below and push this file to your private GitHub
+repository.
+
+
+1. Assume I plan to use the friend_overlap function above to quantify the
+similarity of two users. E.g., because 238 is larger than 1, I conclude that
+Jill Stein and Gary Johnson are more similar than Hillary Clinton and Donald
+Trump.
+
+How is this approach misleading? How might you fix it?
+
+The number of friends of Jill Stein are 1649 and that of Gary Johnson are 3488.
+On the other hand, Hillary Clinton has 769 friends and Donald Trump has 45 friends.
+The chance of high similarity is more when there are more number of friends or when there are more common friends.
+Also, the number of friends in real life is not at all related to the friends on twitter. 
+Thus, this approach of calculating similarity on the basis of friends is misleading. Hence, to fix the problem, the number of friends of the candidates should be in the same range. As in, the comparison should be done on the attributes which have relatively same cardinality. 
+
+
+2. Looking at the output of your followed_by_hillary_and_donald function, why
+do you think this user is followed by both Hilary Clinton and Donald Trump,
+who are rivals? Do some web searches to see if you can find out more
+information.
+
+White House is the user followed by both, Hillary Clinton and Donald Trump. Both of them were strong contenders in November 2016 presidential elections in which Donald Trump was eventually elected as the president of the United States.
+These two continue to be arch rivals and hence to keep themselves updated about the every situation in the White House, they follow the twitter account of White House.
+
+
+3. There is a big difference in how many accounts each candidate follows (Gary
+Johnson follows over 3K accounts, while Donald Trump follows less than
+50). Why do you think this is? How might that affect our analysis?
+
+Donald Trump, being the current president of the United States is very popular. And even before the presidential election, he was very famous, being the strong contender in the elections. However, Gary Johnson was a minor candidate. Thus, to gain more popularity, Gary Johnson follows over 3K accounts, 3488 to be precise as per the current data whereas Donald Trump follows only 45 people.
+This definitely affects our analysis because there is a huge difference between the number of followers of Gary Johnson and Donald Trump. To calculate similarity, the number of followers of the two candidates should be relatively same. Also, the similarity we calculate between the candidates is not the overall similarity; it is just on the basis of number of common friends.
+
+
+4. The follower graph we've collected is incomplete. To expand it, we would
+have to also collect the list of accounts followed by each of the
+friends. That is, for each user X that Donald Trump follows, we would have to
+also collect all the users that X follows. Assuming we again use the API call
+https://dev.twitter.com/rest/reference/get/friends/ids, how many requests will
+we have to make? Given how Twitter does rate limiting
+(https://dev.twitter.com/rest/public/rate-limiting), approximately how many
+minutes will it take to collect this data?
+
+We have 4 primary accounts.
+The number of friends for each of them is 1649, 3488, 769 and 45.
+
+So the total number of accounts for whom we have to send the request to twitter API 
+= 4 + 1649 + 3488 + 769 + 45 
+= 5955
+
+In each 15 minute window, a total of 15 calls can be made to the API.
+
+Thus, number of windows we need (to send 15 requests per 15 minutes) = 5955 / 15 
+                                                                     = 397
+                                                     
+The twitter API accepts 15 requests per 15 minute window. But after every 15 requests, it sleeps for 15 minutes. If we assume that the response time is negligible,
+
+So, the total time it has to wait = 397 * 15 minutes = 5955 minutes
+
+But after the last 15 requests it doesn't have to wait as all the responses have been recieved.
+ 
+Thus, total time taken to collect this data = 5955 - 15 = 5940 minutes
